@@ -9,6 +9,7 @@
     "ajv": "^8.17.1",
     "feather-icons": "^4.29.0",
     "framer-motion": "^7.3.2",
+    "html-loader": "^5.1.0",
     "react": "^18.0.0",
     "react-anchor-link-smooth-scroll": "^1.0.12",
     "react-dom": "^18.0.0",

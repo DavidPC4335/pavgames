@@ -22,6 +22,8 @@ import heroScreenshotImageSrc from "images/demo/MainLandingPageHero.png";
 import logo from "images/croppedlogo.png";
 import useInView from "helpers/useInView";
 import TabCardGrid from "components/cards/TabCardGrid";
+import FiveColumnDark from "components/footers/FiveColumnDark";
+import MiniCenteredFooter from "components/footers/MiniCenteredFooter";
 
 /* Hero */
 const Row = tw.div`flex`;
@@ -88,6 +90,35 @@ const ResizableBox = styled(Rnd)`
 `;
 const ResizeHandleButton = tw.button`cursor-col-resize focus:outline-none w-4 border-l bg-gray-100 absolute right-0 inset-y-0`;
 
+export const MainHeader = ()=>{
+  return(<NavRow>
+            <LogoLink href="/">
+              <img src={logo} alt="" />
+              Pavgames.com
+            </LogoLink>
+            <div tw="flex flex-wrap justify-center lg:justify-end items-center -mr-12">
+              <NavLink target="_blank" href="https://owaiskhan.me/post/free-tailwindcss-react-ui-kit">
+                License & Usage
+              </NavLink>
+              <NavLink target="_blank" href="https://owaiskhan.me">
+                Who Am I ?
+              </NavLink>
+              <NavLink target="_blank" href="https://twitter.com/owaiswiz">
+                Twitter
+              </NavLink>
+              <NavLink target="_blank" href="mailto:owaiswiz@gmail.com">
+                Hire Me!
+              </NavLink>
+              <div tw="md:hidden flex-100 h-0"></div>
+              <PrimaryNavLink target="_blank" href="https://gum.co/QaruQ">
+                Play Now
+              </PrimaryNavLink>
+            </div>
+          </NavRow>);
+
+}
+
+
 export default ({
   features = null,
   primaryButtonUrl = "#landingPageDemos",
@@ -137,30 +168,7 @@ export default ({
     <AnimationRevealPage disabled>
       <Container tw="bg-gray-100 -mx-8 -mt-8 pt-8 px-8">
         <Content2Xl>
-          <NavRow>
-            <LogoLink href="/">
-              <img src={logo} alt="" />
-              Pavgames.com
-            </LogoLink>
-            <div tw="flex flex-wrap justify-center lg:justify-end items-center -mr-12">
-              <NavLink target="_blank" href="https://owaiskhan.me/post/free-tailwindcss-react-ui-kit">
-                License & Usage
-              </NavLink>
-              <NavLink target="_blank" href="https://owaiskhan.me">
-                Who Am I ?
-              </NavLink>
-              <NavLink target="_blank" href="https://twitter.com/owaiswiz">
-                Twitter
-              </NavLink>
-              <NavLink target="_blank" href="mailto:owaiswiz@gmail.com">
-                Hire Me!
-              </NavLink>
-              <div tw="md:hidden flex-100 h-0"></div>
-              <PrimaryNavLink target="_blank" href="https://gum.co/QaruQ">
-                Play Now
-              </PrimaryNavLink>
-            </div>
-          </NavRow>
+          <MainHeader/>
 
           <HeroRow>
             <UpdateNotice>
@@ -195,12 +203,14 @@ export default ({
             <TabCardGrid
                     heading={
                       <>
-                        Checkout our <HighlightedText>menu.</HighlightedText>
+                        Checkout our <HighlightedText>Games.</HighlightedText>
                       </>
                     }
                   />
           </SectionContainer>
-          <SectionContainer>
+            
+
+          {/* <SectionContainer>
             <SectionHeading>Inner Pages</SectionHeading>
             <SectionDescription>
               We also provide {noOfInnerPages} additional inner pages for your various needs like a signup, login,
@@ -222,9 +232,9 @@ export default ({
                 </PreviewCardContainer>
               ))}
             </PreviewCards>
-          </SectionContainer>
+          </SectionContainer> */}
 
-          <SectionContainer id="componentDemos">
+          {/* <SectionContainer id="componentDemos">
             <SectionHeading>Component Blocks</SectionHeading>
             <SectionDescription>
               We also provide {noOfComponentBlocks} components along with the premade landing pages so you can create
@@ -235,9 +245,10 @@ export default ({
               </span>
             </SectionDescription>
             <BlocksRenderer blocks={Object.values(blocks)} />
-          </SectionContainer>
+          </SectionContainer> */}
         </Content2Xl>
       </Container>
+      <MiniCenteredFooter/>  
     </AnimationRevealPage>
   );
 };
