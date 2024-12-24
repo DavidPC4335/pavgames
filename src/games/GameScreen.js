@@ -59,9 +59,10 @@ export default () => {
   useEffect(() => {
     const interval = setInterval(() => {
       const gameIndex = userData.gameData.findIndex((game) => game.game === name);
+      console.log("Game data found, updating data from",userData);
       if (gameIndex !== -1) {
         const cookies = new Cookies();
-        const newUserData = cookies.get("userData");
+        const newUserData = cookies.get("userData") || userData;
         newUserData.gameData[gameIndex] = { ...newUserData.gameData[gameIndex], lastPlayed: new Date(), playtime: newUserData.gameData[gameIndex].playtime + 0.25 };
         cookies.set("userData", newUserData, { path: "/" });
         console.log("Game data updated");
