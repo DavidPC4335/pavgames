@@ -104,8 +104,12 @@ import ComponentRenderer from "ComponentRenderer.js";
 import MainLandingPage from "MainLandingPage.js";
 import ThankYouPage from "ThankYouPage.js";
 
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import GameScreen from "games/GameScreen";
+import SaaSProductLandingPage from "demos/SaaSProductLandingPage";
+import EventLandingPage from "demos/EventLandingPage";
+import HotelTravelLandingPage from "demos/HotelTravelLandingPage";
+import HostingCloudLandingPage from "demos/HostingCloudLandingPage";
 
 export default function App() {
   // If you want to disable the animation just use the disabled `prop` like below on your page's component
@@ -117,11 +121,13 @@ export default function App() {
       <GlobalStyles />
       <Router>
         <Routes>
-          <Route path="/components/:type/:subtype/:name" element={<ComponentRenderer />} />
-          <Route path="/components/:type/:name" element={<ComponentRenderer />} />
-          <Route path="/thank-you" element={<ThankYouPage />} />
-          <Route path="/game" element={<GameScreen />} />
+          {/* <Route path="/components/:type/:subtype/:name" element={<ComponentRenderer />} /> */}
+          {/* <Route path="/components/:type/:name" element={<ComponentRenderer />} /> */}
+          {/* <Route path="/thank-you" element={<ThankYouPage />} /> */}
+          <Route path="/user" element={<HostingCloudLandingPage   />} />
+          <Route path="/game/:name" element={<GameScreen />} />
           <Route path="/" element={<MainLandingPage />} />
+          <Route path="*" element={<Navigate to="/game/notFound"/>} />
         </Routes>
       </Router>
     </>

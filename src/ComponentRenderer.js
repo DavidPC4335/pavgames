@@ -52,7 +52,7 @@ import ThreePlansPricing from "components/pricing/ThreePlans.js";
 import ThreeColWithSideImageFeatures from "components/features/ThreeColWithSideImage.js";
 import TwoColWithButtonFeatures from "components/features/TwoColWithButton.js";
 import ThreeColSimpleFeatures from "components/features/ThreeColSimple.js";
-import ThreeColWithSideImageWithPrimaryBackgroundFeatures from "components/features/ThreeColWithSideImageWithPrimaryBackground.js";
+import ThreeColWithSideImageWithPrimaryBackgroundFeatures from "components/features/UserData.js";
 import TwoColVerticalWithButtonFeatures from "components/features/TwoColWithTwoFeaturesAndButtons.js";
 import TwoColHorizontalWithButtonFeatures from "components/features/TwoColWithTwoHorizontalFeaturesAndButton.js";
 import WithStepsAndImageFeatures from "components/features/TwoColWithSteps.js";
@@ -65,7 +65,7 @@ import VerticalWithAlternateImageAndTextFeatures from "components/features/Verti
 import SliderCards from "components/cards/ThreeColSlider.js";
 import TrendingCards from "components/cards/TwoTrendingPreviewCardsWithImage.js";
 import PortfolioCards from "components/cards/PortfolioTwoCardsWithImage.js";
-import TabGridCards from "components/cards/TabCardGrid.js";
+import TabGridCards from "components/cards/gamesPage.js";
 import ProfileThreeColGridCards from "components/cards/ProfileThreeColGrid.js"
 import ThreeColContactDetailsCards from "components/cards/ThreeColContactDetails.js"
 

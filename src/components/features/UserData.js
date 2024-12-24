@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import styled from "styled-components";
 import tw from "twin.macro";
 //eslint-disable-next-line
@@ -14,7 +14,10 @@ import CustomizeIconImage from "images/customize-icon.svg";
 import FastIconImage from "images/fast-icon.svg";
 import ReliableIconImage from "images/reliable-icon.svg";
 import SimpleIconImage from "images/simple-icon.svg";
-
+import { AppContext } from "AppContext";
+import userIcon from "images/userIcon.png";
+import { Cookies } from "react-cookie";
+import { Stack } from "@mui/material";
 const Container = tw.div`relative bg-primary-900 -mx-8 px-8 text-gray-100`;
 
 const ThreeColumnContainer = styled.div`
@@ -29,7 +32,9 @@ const VerticalSpacer = tw.div`mt-10 w-full`;
 const Column = styled.div`
   ${tw`md:w-1/2 lg:w-1/3 max-w-xs`}
 `;
-
+const ClearBtn = styled.button`
+  ${tw`mt-4 px-8 py-2 rounded bg-red-500 text-white font-bold hover:bg-red-700 transition duration-300`}
+`;
 const Card = styled.div`
   ${tw`flex flex-col items-center sm:items-start text-center sm:text-left h-full mx-4 px-2 py-8`}
   .imageContainer {
@@ -52,11 +57,27 @@ const Card = styled.div`
   }
 `;
 
+const getIcon = (playtime) => {
+  if(playtime <= 0){
+    return FastIconImage;
+  }
+  else if(playtime < 15){
+    return SimpleIconImage;
+  }
+  else if(playtime < 60){
+    return ReliableIconImage;
+  }
+  else{
+    return CustomizeIconImage;
+  }
+}
+
+
 export default ({
   cards = null,
-  heading = "Amazing Features",
+  heading = "Your Player Info",
   subheading = "",
-  description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+  description = "Below are your personal game data such as playtime, achievements, and more."
 }) => {
   /*
    * This componets has an array of object denoting the cards defined below. Each object in the cards array can have the key (Change it according to your need, you can also add more objects to have more cards in this feature component) or you can directly pass this using the cards prop:
@@ -65,19 +86,23 @@ export default ({
    *  3) description - the description of the card
    *  If a key for a particular card is not provided, a default value is used
    */
-
-  const defaultCards = [
-    {
-      imageSrc: ShieldIconImage,
-      title: "Secure",
-      description: "We strictly only deal with vendors that provide top notch security infrastructure."
-    },
-    { imageSrc: SupportIconImage, title: "24/7 Support" },
-    { imageSrc: CustomizeIconImage, title: "Customizable" },
-    { imageSrc: ReliableIconImage, title: "Reliable" },
-    { imageSrc: FastIconImage, title: "Fast" },
-    { imageSrc: SimpleIconImage, title: "Easy" }
-  ];
+  const {userData} = useContext(AppContext);
+  const [defaultCards,setDefaultCards] = React.useState([]);
+  useEffect(() => {
+    if(userData){
+      const gameData = userData.gameData;
+      const cards = gameData.map((game) => {
+        return {
+          imageSrc: getIcon(game.playtime),
+          title: game.game,
+          description: [`Playtime: ${game.playtime} Minutes`,`${game.lastPlayed?`Last played: ${new Date(game.lastPlayed).toDateString()}`:''}`],
+        }
+      }
+      );
+      const sortedCards = cards.sort((a, b) => b.description[0].split(' ')[1]-a.description[0].split(' ')[1]);
+      setDefaultCards(sortedCards);
+    }
+  }, [userData]);
 
   if (!cards) cards = defaultCards;
 
@@ -85,8 +110,15 @@ export default ({
     <Container>
       <ThreeColumnContainer>
         {subheading && <Subheading>{subheading}</Subheading>}
-        <Heading>{heading}</Heading>
-        {description && <Description>{description}</Description>}
+        <img src={userIcon} alt="" width={'100px'}/>
+        <Heading style={{textAlign: 'center'}}> 
+                
+              {heading}</Heading>
+        {description && (Array.isArray(description)? description.map((des)=>{
+          console.log(description);
+          return <Description>{des}</Description>
+          
+          }):<Description>{description}</Description>)}
         <VerticalSpacer />
         {cards.map((card, i) => (
           <Column key={i}>
@@ -96,14 +128,17 @@ export default ({
               </span>
               <span className="textContainer">
                 <span className="title">{card.title || "Fully Secure"}</span>
-                <p className="description">
-                  {card.description || "Lorem ipsum donor amet siti ceali ut enim ad minim veniam, quis nostrud."}
-                </p>
+                {Array.isArray(card.description)? card.description.map((des)=><p>{des}</p>):<p>{card.description}</p>}
               </span>
             </Card>
           </Column>
         ))}
       </ThreeColumnContainer>
+      {defaultCards.length > 0?<div style={{ textAlign: 'center', padding: '20px' }}>
+        <ClearBtn onClick={()=>{const cookies = new Cookies();cookies.remove("userData");setDefaultCards([]);
+
+        }}>Clear User Data</ClearBtn>
+      </div>:<Heading style={{textAlign: 'center'}}>User Data Cleared!</Heading>}
     </Container>
   );
 };

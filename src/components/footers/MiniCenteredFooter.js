@@ -6,6 +6,7 @@ import logo from "../../images/croppedlogo.png";
 import { ReactComponent as FacebookIcon } from "../../images/facebook-icon.svg";
 import { ReactComponent as TwitterIcon } from "../../images/twitter-icon.svg";
 import { ReactComponent as YoutubeIcon } from "../../images/youtube-icon.svg";
+import { ReactComponent as EmailIcon } from "../../images/mail.svg";
 
 
 const Container = tw(ContainerBase)`bg-gray-900 text-gray-100 -mx-32 -mb-8`
@@ -39,14 +40,14 @@ export default () => {
             <LogoText>PavGames</LogoText>
           </LogoContainer>
           <LinksContainer>
-            <Link href="#">Home</Link>
-            <Link href="#">About</Link>
+            <Link href="mailto:support@pavgames.com">Report an Issue</Link>
+            {/* <Link href="#">About</Link>
             <Link href="#">Contact Us</Link>
             <Link href="#">Blog</Link>
-            <Link href="#">Reviews</Link>
+            <Link href="#">Reviews</Link> */}
           </LinksContainer>
           <SocialLinksContainer>
-            <SocialLink href="https://facebook.com">
+            {/* <SocialLink href="https://facebook.com">
               <FacebookIcon />
             </SocialLink>
             <SocialLink href="https://twitter.com">
@@ -54,10 +55,13 @@ export default () => {
             </SocialLink>
             <SocialLink href="https://youtube.com">
               <YoutubeIcon />
+            </SocialLink> */}
+            <SocialLink target="_blank" href="mailto:support@pavgames.com">
+              <EmailIcon/>
             </SocialLink>
           </SocialLinksContainer>
           <CopyrightText>
-            &copy; Copyright 2024, David Pavlove Cunsolo. All Rights Reserved.
+            &copy; Copyright 2024, David PC. All Rights Reserved.
           </CopyrightText>
         </Row>
       </Content>

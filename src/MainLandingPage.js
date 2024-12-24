@@ -21,9 +21,10 @@ import { ReactComponent as ArrowRightIcon } from "images/arrow-right-3-icon.svg"
 import heroScreenshotImageSrc from "images/demo/MainLandingPageHero.png";
 import logo from "images/croppedlogo.png";
 import useInView from "helpers/useInView";
-import TabCardGrid from "components/cards/TabCardGrid";
+import TabCardGrid from "components/cards/gamesPage";
 import FiveColumnDark from "components/footers/FiveColumnDark";
 import MiniCenteredFooter from "components/footers/MiniCenteredFooter";
+import { gameData } from "game-config";
 
 /* Hero */
 const Row = tw.div`flex`;
@@ -49,9 +50,7 @@ const ActionButton = tw(
   AnchorLink
 )`px-8 py-3 font-bold rounded bg-primary-500 text-gray-100 hocus:bg-primary-700 hocus:text-gray-200 focus:shadow-outline focus:outline-none transition duration-300 mt-12 inline-block tracking-wide text-center px-10 py-4 font-semibold tracking-normal`;
 const PrimaryButton = tw(ActionButton)``;
-const SecondaryButton = tw(
-  ActionButton
-)`mt-6 sm:mt-12 sm:ml-8 bg-gray-300 text-gray-800 hocus:bg-gray-400 hocus:text-gray-900`;
+const SecondaryButton = tw.a` px-8 py-3 font-bold rounded text-gray-100 hocus:text-gray-200 focus:shadow-outline focus:outline-none transition duration-300 mt-12 inline-block tracking-wide text-center px-10 py-4 font-semibold tracking-normal px-5 mt-6 sm:mt-12 sm:ml-8 bg-gray-300 text-gray-800 hocus:bg-gray-400 hocus:text-gray-900`;
 const FeatureList = tw.ul`mt-6 leading-loose flex flex-wrap max-w-xl mx-auto lg:mx-0`;
 const Feature = tw.li`mt-2 flex items-center flex-shrink-0 w-full sm:w-1/2 justify-center lg:justify-start`;
 const FeatureIcon = tw(CheckboxIcon)`w-5 h-5 text-primary-500`;
@@ -89,15 +88,15 @@ const ResizableBox = styled(Rnd)`
   }
 `;
 const ResizeHandleButton = tw.button`cursor-col-resize focus:outline-none w-4 border-l bg-gray-100 absolute right-0 inset-y-0`;
-
+const Card = tw(motion.a)``;
 export const MainHeader = ()=>{
   return(<NavRow>
-            <LogoLink href="/">
+            <LogoLink href="#games">
               <img src={logo} alt="" />
               Pavgames.com
             </LogoLink>
             <div tw="flex flex-wrap justify-center lg:justify-end items-center -mr-12">
-              <NavLink target="_blank" href="https://owaiskhan.me/post/free-tailwindcss-react-ui-kit">
+              {/* <NavLink target="_blank" href="https://owaiskhan.me/post/free-tailwindcss-react-ui-kit">
                 License & Usage
               </NavLink>
               <NavLink target="_blank" href="https://owaiskhan.me">
@@ -105,13 +104,10 @@ export const MainHeader = ()=>{
               </NavLink>
               <NavLink target="_blank" href="https://twitter.com/owaiswiz">
                 Twitter
-              </NavLink>
-              <NavLink target="_blank" href="mailto:owaiswiz@gmail.com">
-                Hire Me!
-              </NavLink>
+              </NavLink> */}
               <div tw="md:hidden flex-100 h-0"></div>
-              <PrimaryNavLink target="_blank" href="https://gum.co/QaruQ">
-                Play Now
+              <PrimaryNavLink href="/#games">
+                See Our Games
               </PrimaryNavLink>
             </div>
           </NavRow>);
@@ -121,10 +117,10 @@ export const MainHeader = ()=>{
 
 export default ({
   features = null,
-  primaryButtonUrl = "#landingPageDemos",
+  primaryButtonUrl = "#games",
   primaryButtonText = "Explore Our Games",
-  secondaryButtonUrl = "#componentDemos",
-  secondaryButtonText = "View Components",
+  secondaryButtonUrl = "/user",
+  secondaryButtonText = "View User Data",
   buttonRoundedCss = "",
   landingPages = components.landingPages,
   innerPages = components.innerPages,
@@ -151,17 +147,13 @@ export default ({
     }
   };
 
-  const noOfLandingPages = Object.keys(landingPages).length;
+  const numGames = Object.keys(gameData).length;
   const noOfInnerPages = Object.keys(innerPages).length;
   const noOfComponentBlocks = Object.values(blocks).reduce((acc, block) => acc + Object.keys(block.elements).length, 0);
 
   features = features || [
-    `${noOfLandingPages} Landing Page Demos`,
-    `${noOfInnerPages} Inner Pages`,
-    `${noOfComponentBlocks} Components`,
-    "Uses TailwindCSS",
-    "Fully Responsive",
-    "Fully Customizable"
+    `${numGames} Games Ready to Play`,
+    `Based On Ontario Curriculum`,
   ];
 
   return (
@@ -176,7 +168,7 @@ export default ({
               Website still in early development. Stay tuned for more updates!
             </UpdateNotice>
             <TextColumn>
-              <Heading as="h1">{heading}</Heading>
+              <Heading as="h1">Free <HighlightedText>Educational</HighlightedText> Games</Heading>
               <Description>{description}</Description>
               <FeatureList>
                 {features.map((feature, index) => (
@@ -190,7 +182,8 @@ export default ({
                 <PrimaryButton href={primaryButtonUrl} css={buttonRoundedCss}>
                   {primaryButtonText}
                 </PrimaryButton>
-                <SecondaryButton href={secondaryButtonUrl}>{secondaryButtonText}</SecondaryButton>
+                <Card href={'/user'}>
+                <SecondaryButton >{secondaryButtonText}</SecondaryButton></Card>
               </Actions>
             </TextColumn>
             <ImageColumn>
@@ -199,7 +192,7 @@ export default ({
               </ImageContainer>
             </ImageColumn>
           </HeroRow>
-          <SectionContainer id="landingPageDemos">
+          <SectionContainer id="games">
             <TabCardGrid
                     heading={
                       <>
