@@ -20,6 +20,7 @@ import { gameData } from "game-config";
 import gameNotFound from "images/gameNotFound.jpg";
 import { AppContext } from "AppContext";
 import { Cookies } from "react-cookie";
+import { getNonEducationalTimeAvailable } from "helpers/GameData";
 const Heading = tw(SectionHeading)``;
 const Subheading = tw(SubheadingBase)`text-center mb-3`;
 const Description = tw(SectionDescription)`text-center mx-auto`;
@@ -42,6 +43,7 @@ const FullScreenButton = tw.button`px-2 py-2 rounded bg-primary-500 text-gray-10
 const FullScreenText = tw.p`hidden md:block text-center text-sm font-semibold text-gray-100`;
 
 
+
 export default () => {
   const {userData,setUserData} = useContext(AppContext);
   const {name} = useParams();
@@ -57,6 +59,26 @@ export default () => {
     }
   }
   useEffect(() => {
+    if(userData && (userData.fromCookie||getNonEducationalTimeAvailable(userData)<0)){
+      console.log("Checking permitted time",userData);
+      checkPermittedTime();
+    }
+  }, [userData]);
+
+  /*Checks if user can be playing game */
+  const checkPermittedTime = (data=userData) => {
+    if(!gameData[name].isEducational){
+      if(getNonEducationalTimeAvailable(data)<=0){
+        console.log("Non educational time over");
+        //redirect to home
+        alert("You have exceeded your non-educational time limit. Please play more educational games to unlock more time.");
+        window.location.href = "/";
+      }
+    }
+  }
+
+
+  useEffect(() => {
     const interval = setInterval(() => {
       const gameIndex = userData.gameData.findIndex((game) => game.game === name);
       console.log("Game data found, updating data from",userData);
@@ -67,6 +89,11 @@ export default () => {
         cookies.set("userData", newUserData, { path: "/" });
         console.log("Game data updated");
         setUserData(newUserData);
+        //checking if game is non educational
+        
+        checkPermittedTime(newUserData);
+
+
       }else{
         console.log("Game data not found",userData);
       }
@@ -74,13 +101,15 @@ export default () => {
     return () => clearInterval(interval);
   }, []);
 
+
+
   useEffect(() => {
     if(full){
       goFullscreen("game");
       setFull(false);  
     }
   }, [full]);
-
+  
   return (<>
   <Container>
   <Content2Xl>
@@ -88,7 +117,8 @@ export default () => {
       </Content2Xl>
       <Content2Xl>
         {title && <Heading>{title}</Heading>}
-        {description && <Description>{description}</Description>}
+        {description && <Description>{description+` Free Time available: ${Math.max(0,getNonEducationalTimeAvailable(userData))}`} </Description>}
+       {!gameData[name].isEducational && <Description>Playing this game will reduce your free time. Play more educational games to unlock more time.</Description>} 
       </Content2Xl>
   {gameUrl?<>
      <GameContainer src={gameUrl} width="100%" height="100%" allowFullScreen id="game"/>

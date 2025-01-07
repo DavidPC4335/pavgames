@@ -18,6 +18,7 @@ import { AppContext } from "AppContext";
 import userIcon from "images/userIcon.png";
 import { Cookies } from "react-cookie";
 import { Stack } from "@mui/material";
+import { getNonEducationalTimeAvailable } from "helpers/GameData";
 const Container = tw.div`relative bg-primary-900 -mx-8 px-8 text-gray-100`;
 
 const ThreeColumnContainer = styled.div`
@@ -76,7 +77,7 @@ const getIcon = (playtime) => {
 export default ({
   cards = null,
   heading = "Your Player Info",
-  subheading = "",
+  subheading = "dwd",
   description = "Below are your personal game data such as playtime, achievements, and more."
 }) => {
   /*
@@ -109,7 +110,6 @@ export default ({
   return (
     <Container>
       <ThreeColumnContainer>
-        {subheading && <Subheading>{subheading}</Subheading>}
         <img src={userIcon} alt="" width={'100px'}/>
         <Heading style={{textAlign: 'center'}}> 
                 
@@ -119,6 +119,7 @@ export default ({
           return <Description>{des}</Description>
           
           }):<Description>{description}</Description>)}
+          <Description>{`You Have ${Math.max(0,getNonEducationalTimeAvailable(userData))} mins of free game Time!`}</Description>
         <VerticalSpacer />
         {cards.map((card, i) => (
           <Column key={i}>

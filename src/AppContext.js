@@ -12,7 +12,7 @@ const AppProvider = ({ children }) => {
     useEffect(() => {
         const userDataFromCookie = cookies.get('userData');
         if (userDataFromCookie) {
-            setUserData(userDataFromCookie);
+            setUserData({fromCookie:true,...userDataFromCookie});
             console.log("User data loaded from cookie", userDataFromCookie);
         }
     }, []);

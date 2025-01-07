@@ -17,9 +17,22 @@ import apostrophe from './images/games/apostrophe.png';
 import habitats from './images/games/habitats.png';
 import habitatspt2 from './images/games/habitatspt2.png';
 import worlder from './images/games/worlder.png';
+import humanbody from './images/games/humanbody.png';
 
+
+export const gameConfig = {
+    nonEducationalTimeRatio: 1,
+}
 
 export const gameData = {
+    humanbody: {
+        title: "Human Body",
+        name: "humanbody",
+        description: "This is a game about the human body.",
+        url: "https://pavgames-humanbody.netlify.app",
+        isEducational: true,
+        img: humanbody,
+    },
     finance: {
         title: "Financial Literacy",
         name: "finance",
@@ -193,6 +206,7 @@ export const gameCategories = {
         gameData.finance
     ],
     Science: [
+        gameData.humanbody,
         gameData.matter,
         gameData.matterpt2,
         gameData.light,
@@ -210,114 +224,14 @@ export const gameCategories = {
 }
 
 export const getEmptyGameData = () => {
-    return {gameData:[
-        {
-            game:'finance',
-            playtime:0,
-            achievements:0,
-            lastPlayed: null,
-        },
-        {
-            game:'math',
-            playtime:0,
-            achievements:0,
-            lastPlayed: null,
-        },
-        {
-            game:'gyb',
-            playtime:0,
-            achievements:0,
-            lastPlayed: null,
-        },
-        {
-            game:'matter',
-            playtime:0,
-            achievements:0,
-            lastPlayed: null,
-        },
-        {
-            game:'matterpt2',
-            playtime:0,
-            achievements:0,
-            lastPlayed: null,
-        },
-        {
-            game:'light',
-            playtime:0,
-            achievements:0,
-            lastPlayed: null,
-        },
-        {
-            game:'lightpt2',
-            playtime:0,
-            achievements:0,
-            lastPlayed: null,
-        },
-        {
-            game:'physics',
-            playtime:0,
-            achievements:0,
-            lastPlayed: null,
-        },
-        {
-            game:'wurdle',
-            playtime:0,
-            achievements:0,
-            lastPlayed: null,
-        },
-        {
-            game:'pointOfView',
-            playtime:0,
-            achievements:0,
-            lastPlayed: null,
-        },
-        {
-            game:'rightWord',
-            playtime:0,
-            achievements:0,
-            lastPlayed: null,
-        },
-        {
-            game:'_2040shape',
-            playtime:0,
-            achievements:0,
-            lastPlayed: null,
-        },
-        {
-            game:'authorsPurpose',
-            playtime:0,
-            achievements:0,
-            lastPlayed: null,
-        },
-        {
-            game:'rounding',
-            playtime:0,
-            achievements:0,
-            lastPlayed: null,
-        },
-        {
-            game:'apostrophe',
-            playtime:0,
-            achievements:0,
-            lastPlayed: null,
-        },
-        {
-            game:'habitats',
-            playtime:0,
-            achievements:0,
-            lastPlayed: null,
-        },
-        {
-            game:'habitatspt2',
-            playtime:0,
-            achievements:0,
-            lastPlayed: null,
-        },
-        {
-            game:'worlder',
-            playtime:0,
-            achievements:0,
-            lastPlayed: null,
-        },
-    ]};
+    return {
+        fromCookie: false,
+        gameData: Object.keys(gameData).map((key) => {
+            return {
+                game: key,
+                lastPlayed: undefined,
+                playtime: 0
+            }
+        })
+    }
 }
